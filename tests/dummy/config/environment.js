@@ -8,14 +8,19 @@ module.exports = function(environment) {
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
-        // Here you can enable experimental features on an ember canary build
-        // e.g. 'with-controller': true
+        'ember-htmlbars-attribute-syntax': true,
+        'ember-htmlbars-inline-if-helper': true,
+        'ember-htmlbars-component-generation': true
       }
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      vegasSlides: [
+        {src: '/assets/imgs/slide1.jpg'},
+        {src: '/assets/imgs/slide2.jpg'},
+        {src: '/assets/imgs/slide3.jpg'},
+        {src: '/assets/imgs/slide4.jpg'}
+      ]
     }
   };
 

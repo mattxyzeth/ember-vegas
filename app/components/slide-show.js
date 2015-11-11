@@ -1,0 +1,1 @@
+export { default } from 'ember-vegas/components/slide-show';
