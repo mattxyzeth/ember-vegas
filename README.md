@@ -1,8 +1,14 @@
 __Please Note: This is very much a work in progress. Use at your own will.__
 
-PR's are always welcome to bring new features.
+PR's are always welcome to bring new features and fix bugs.
 
 # ember-vegas
+
+Emberizing the background slide show library [Vegas](http://vegas.jaysalvat.com), built by [Jay Salvat](http://jaysalvat.com).
+
+This Addon is built for Ember 2.2.0 using the `ember-htmlbars-component-generation` feature flag.
+
+--
 
 This README outlines the details of collaborating on this Ember addon.
 
