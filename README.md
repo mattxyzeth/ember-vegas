@@ -1,4 +1,8 @@
-# Ember-vegas
+__Please Note: This is very much a work in progress. Use at your own will.__
+
+PR's are always welcome to bring new features.
+
+# ember-vegas
 
 This README outlines the details of collaborating on this Ember addon.
 
