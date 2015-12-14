@@ -4,6 +4,8 @@ import layout from '../templates/components/slide-show';
 const {
   GlimmerComponent,
   inject,
+  isPresent,
+  isBlank,
   on
 } = Ember;
 
@@ -41,34 +43,46 @@ export default GlimmerComponent.extend({
 
   _loadSlides: on('didInsertElement', function() {
     if (this.attrs.remote) {
-      this.get('store').findAll('slide').then((slides)=> {
-        if (slides) {
-          this.set('slides', slides.map((model)=> model.get('attributes')));
+      return this.get('store').findAll('slide').then((slides)=> {
+        if (isPresent(slides)) {
+          this.set('slides', this.mapSlides(slides));
           this.vegasInit();
         }
       });
     } else {
-      const slides = this.get('store').peekAll('slide');
+      return new Ember.RSVP.Promise((resolve, reject)=> {
+        if (isBlank(this.attrs.slides)) {
+          const slides = this.get('store').peekAll('slide');
 
-      if (slides.get('length')) {
-        this.set('slides', slides.map((model)=> {
-          return model.toJSON();
-        }));
-        this.vegasInit();
-      }
+          if (slides.get('length')) {
+            this.set('slides', this.mapSlides(slides));
+            this.vegasInit();
+            resolve();
+          } else {
+            reject();
+          }
+        } else {
+          this.set('slides', this.getAttrs('slides'));
+          resolve();
+        }
+      });
     }
   }),
+
+  mapSlides(slides) {
+    return slides.map(slide => slide.toJSON());
+  },
 
   getProp(prop) {
     let value = this.get(`attrs.${prop}`) || this.get(`defaults.${prop}`);
     if (['preload', 'preloadImage', 'preloadVideo', 'overlay'].indexOf(prop) !== -1) {
-      value = value === 'true' ? true : value;
-      value = value === 'false' ? false : value;
+      value = JSON.parse(value); // Convert boolean strings
     }
     return value;
   },
 
   vegasInit() {
+    console.log('init called');
     let props = keys(this.get('defaults')).reduce((result, key)=> {
       result[key] = this.getProp(key);
       return result;
